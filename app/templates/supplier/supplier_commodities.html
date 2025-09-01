@@ -1,0 +1,85 @@
+<!-- templates/supplier/supplier_commodities.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Commodities Supplied by {{ supplier.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        a.button {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        a.button:hover {
+            background-color: #218838;
+        }
+        .danger {
+            background-color: #dc3545;
+        }
+        .danger:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h2>Commodities supplied by {{ supplier.name }}</h2>
+
+    {% if supplier.commodities %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commodity in supplier.commodities %}
+                <tr>
+                    <td>{{ commodity.name }}</td>
+                    <td>{{ commodity.quantity }}</td>
+                    <td>{{ commodity.unit }}</td>
+                    <td>Ksh.{{ commodity.price }}</td>
+                    <td>
+                        <a href="{{ url_for('supplier.edit_commodity', commodity_id=commodity.id) }}" class="button">Edit</a>
+                        <form action="{{ url_for('supplier.delete_commodity', commodity_id=commodity.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="button danger" onclick="return confirm('Are you sure you want to delete this commodity?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No commodities found for this supplier.</p>
+    {% endif %}
+
+    <a href="{{ url_for('supplier.add_commodity', supplier_id=supplier.supplier_id) }}" class="button">Add New Commodity</a>
+    <a href="{{ url_for('supplier.list_supplier') }}" class="button">Back to Supplier List</a>
+</body>
+</html>

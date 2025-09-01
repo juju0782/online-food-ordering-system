@@ -1,0 +1,78 @@
+{% extends 'adminLayout.html' %}
+{% block main %}
+<div class="container py-5">
+    <h2 class="mb-4 text-danger" style="font-weight: 900;">Edit Product</h2>
+
+    <!-- Form to edit the product -->
+    <form method="POST" action="{{ url_for('product.edit_product', product_id=product.product_id) }}" enctype="multipart/form-data">
+        <!-- Product Category -->
+        <div class="mb-3">
+            <label for="product_category" class="form-label">Product Category</label>
+            <select 
+            name="product_category" 
+            id="product_category" 
+            class="form-select" 
+            required>
+            <option value="" disabled>-- Select a category --</option>
+            <option value="Main Course" {% if product.product_category == 'Main Course' %}selected{% endif %}>Main Course</option>
+            <option value="Beverages hot" {% if product.product_category == 'Beverages hot' %}selected{% endif %}>Beverages-hot</option>
+            <option value="Beverages cold" {% if product.product_category == 'Beverages cold' %}selected{% endif %}>Beverages-cold</option>
+            <option value="Beverages alcoholic" {% if product.product_category == 'Beverages alcoholic' %}selected{% endif %}>Beverages-alcoholic</option>
+            <option value="Seafood" {% if product.product_category == 'Seafood' %}selected{% endif %}>Seafood</option>
+            <option value="Salad" {% if product.product_category == 'Salad' %}selected{% endif %}>Salad</option>
+            <option value="Breackfast" {% if product.product_category == 'Breackfast' %}selected{% endif %}>Breackfast</option>
+            <option value="Kids meal" {% if product.product_category == 'Kids meal' %}selected{% endif %}>Kids-meal</option>
+            <option value="Street food" {% if product.product_category == 'Street food' %}selected{% endif %}>Street-food</option>
+            <option value="Appetizer" {% if product.product_category == 'Appetizer' %}selected{% endif %}>Appetizer</option>
+            <option value="Snacks" {% if product.product_category == 'Snacks' %}selected{% endif %}>Snacks</option>
+            <option value="Desserts" {% if product.product_category == 'Desserts' %}selected{% endif %}>Desserts</option>
+            <option value="Other" {% if product.product_category == 'Other' %}selected{% endif %}>Other</option>
+        </select>
+        </div>
+
+        <!-- Product Name -->
+        <div class="mb-3">
+            <label for="product_name" class="form-label">Product Name</label>
+            <input type="text" name="product_name" id="product_name" class="form-control" value="{{ product.product_name }}" required>
+        </div>
+
+        <!-- Product Description -->
+        <div class="mb-3">
+            <label for="product_description" class="form-label">Product Description</label>
+            <textarea name="description" id="product_description" class="form-control" rows="3">{{ product.description }}</textarea>
+        </div>
+
+        <!-- Product Cost -->
+        <div class="mb-3">
+            <label for="price" class="form-label">Price (Ksh)</label>
+            <input type="number" name="price" id="product_cost" class="form-control" value="{{ product.price }}" required>
+        </div>
+
+            <!-- Current Product Image -->
+<div class="mb-3">
+    <label for="current_product_image" class="form-label">Current Product Image:</label>
+    
+        <img src="{{ url_for('static', filename=product.product_image_path) }}" alt="Product Image" class="img-thumbnail d-block" style="max-width: 150px;">
+
+
+</div>
+
+        <!-- Upload New Product Image -->
+        <div class="mb-3">
+            <label for="product_image" class="form-label">Upload New Product Image</label>
+            <input type="file" name="product_image" id="product_image" class="form-control">
+            <small class="form-text text-muted">Upload a new image to replace the current one (optional).</small>
+        </div>
+
+        <!-- Form Buttons -->
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Save Changes
+            </button>
+            <a href="{{ url_for('product.all_products') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Products Page
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

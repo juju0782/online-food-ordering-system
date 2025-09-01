@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<div class="container py-5">
+    <h2>{{ product.product_name }}</h2>
+    <img src="{{ product.product_image_path }}" alt="{{ product.product_name }}" class="img-fluid">
+    <p>{{ product.product_description }}</p>
+    <p><strong>Price:</strong> KES {{ product.price }}</p>
+    <button 
+                            class="btn btn-primary add-to-cart" 
+                            data-product-id="{{ product.product_id }}" 
+                            data-action="increment">
+                            Add to Cart
+    </button>
+</div>
+<script>
+    function showCategory(categoryId) {
+       document.querySelectorAll('.category').forEach(category => {
+           category.style.display = 'none';
+       });
+       document.getElementById(categoryId).style.display = 'block';
+   }
+   document.addEventListener('DOMContentLoaded', function() {
+       const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+       addToCartButtons.forEach(button => {
+           button.addEventListener('click', function(event) {
+               event.preventDefault(); // Prevent default button action
+
+               const productId = this.getAttribute('data-product-id');
+               const action = this.getAttribute('data-action');
+
+               // Make the POST request to update the cart
+               fetch('/cart/shopping-cart', {
+                   method: 'POST',
+                   headers: { 'Content-Type': 'application/json' },
+                   body: JSON.stringify({
+                       product_id: productId,
+                       action: action
+                   })
+               })
+               .then(response => response.json())
+               .then(data => {
+                   if (data.success) {
+                       console.log(data.message || "Item added to the cart!");
+                       location.reload(); // Reload page to reflect changes
+                   } else {
+                       alert(data.message || "Failed to update cart.");
+                   }
+               })
+               .catch(error => {
+                   console.error("Error:", error);
+                   alert("An error occurred while updating the cart.");
+               });
+           });
+       });
+   });
+</script>
+{% endblock %}

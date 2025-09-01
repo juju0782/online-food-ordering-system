@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="login-box">
+               
+                <div class="card mt-5">
+                    <div class="card-body login-card-body">
+                        <p class="login-box-msg">Login to your account</p>
+                        
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+
+                        <form action="{{ url_for('auth.login') }}" method="post">
+                            {{ form.hidden_tag() }}
+                        
+                            <div class="input-group mb-3">
+                                {{ form.email(class="form-control", placeholder="Email") }}
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-envelope"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="input-group mb-3">
+                                {{ form.password(class="form-control", placeholder="Password") }}
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="icheck-primary">
+                                        {{ form.remember_me(id="remember_me") }}
+                                        <label for="remember_me">
+                                            Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+        
+                        <p class="mb-1">
+                            <a href="{{ url_for('auth.forgot_password') }}">I forgot my password</a>
+                        </p>
+                        <p class="mb-0">
+                            <a href="{{ url_for('auth.register') }}" class="text-center">Register a new membership</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

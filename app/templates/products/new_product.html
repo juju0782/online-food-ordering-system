@@ -1,0 +1,87 @@
+{% extends 'adminLayout.html' %}
+{% block main %}
+
+<div class="container mt-0">
+    <h1 class="text-center">Add a New Product</h1>
+    <p class="text-center text-muted">Fill in the form below to add a new product.</p>
+    
+
+
+    <form action="{{url_for('product.add_new_product') }}" method="POST" enctype="multipart/form-data" class="p-4 border rounded shadow-sm bg-light">
+        <div class="mb-3">
+            <label for="product_name" class="form-label">Product Name</label>
+            <input 
+                type="text" 
+                name="product_name" 
+                id="product_name" 
+                class="form-control" 
+                placeholder="Enter item name (e.g., Burger, Juice)" 
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="product_category" class="form-label">Category</label>
+            <select 
+                name="product_category" 
+                id="product_category" 
+                class="form-select" 
+                required>
+                <option value="" disabled selected>-- Select a category --</option>
+                    <option value="Main Course">Main Course</option>
+                    <option value="Beverages">Beverages</option>
+                    <option value="Seafood">Seafood</option>
+                    <option value="Salad">Salad</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Kids meal">Kids meal</option>
+                    <option value="Street food">Street food</option>
+                    <option value="Appetizer">Appetizer</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Desserts">Desserts</option>
+                    <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price (KES)</label>
+            <input 
+                type="number" 
+                name="price" 
+                id="price" 
+                class="form-control" 
+                placeholder="Enter price in KES" 
+                step="0.01" 
+                min="0" 
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea 
+                name="description" 
+                id="description" 
+                class="form-control" 
+                placeholder="Write a brief description of the product" 
+                rows="3" 
+                required>
+            </textarea>
+        </div>
+        <div class="mb-3">
+            <label for="product_image_path" class="form-label">Product Image</label>
+            <input 
+                type="file" 
+                name="product_image_path" 
+                id="product_image_path" 
+                class="form-control" 
+                accept="image/*" 
+                required>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </div>
+
+        <div class="mt-2">
+            <a href="{{ url_for('product.all_products') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Products Page
+            </a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

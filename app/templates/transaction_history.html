@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 250px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #c82333;
+        }
+
+        #search {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Transaction History</h2>
+    <a href="{{ url_for('main.clients_page') }}" style="display: inline-block; margin-bottom: 15px; font-weight: bold; color: #007bff;">&larr; Back to Clients</a>
+
+
+    <!-- Search Bar -->
+    <input type="text" id="search" placeholder="Search transactions..." onkeyup="filterTable()">
+
+    <!-- Debugging: Check if transactions are being passed -->
+    <h3>Debug Transactions:</h3>
+    {% for transaction in transactions %}
+        <p>Transaction ID: {{ transaction.id }}, Client: {{ transaction.user_id }}, Amount: {{ transaction.amount }}</p>
+    {% else %}
+        <p>No transactions found.</p>
+    {% endfor %}
+
+    <!-- Transactions Table -->
+    <table border="1" id="transactionTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Food Item</th>
+                <th>Amount (Ksh)</th>
+                <th>Payment Method</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.user_id }}</td>
+                <td>{{ transaction.food_item }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.payment_method }}</td>
+                <td>{{ transaction.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <a href="{{ url_for('main.edit_transaction', transaction_id=transaction.id) }}">Edit</a> |
+                    <a href="{{ url_for('main.delete_transaction', transaction_id=transaction.id) }}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('main.download_transaction_history', user_id=current_user.user_id) }}" class="btn btn-primary mt-3">Download PDF</a>
+    <a href="{{ url_for('main.send_transaction_history_email', user_id=current_user.user_id) }}" class="btn btn-success">Send to Email</a>
+    <!-- JavaScript for Search Functionality -->
+    <script>
+        function filterTable() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let table = document.getElementById("transactionTable");
+            let rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the table header
+                let rowText = rows[i].innerText.toLowerCase();
+                rows[i].style.display = rowText.includes(input) ? "" : "none";
+            }
+        }
+    </script>
+</body>
+</html>

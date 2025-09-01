@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+</head>
+<body>
+    <h1>Payment Receipt</h1>
+
+    {% if transaction %}
+        <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+        <p><strong>Client Name:</strong> {{ transaction.client.name }}</p>
+        <p><strong>Food Item:</strong> {{ transaction.food_item }}</p>
+        <p><strong>Amount:</strong> ${{ transaction.amount }}</p>
+        <p><strong>Payment Method:</strong> {{ transaction.payment_method }}</p>
+        <p><strong>Date:</strong> {{ transaction.date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+
+        <a href="{{ url_for('main.generate_receipt', transaction_id=transaction.id) }}" download>Download Receipt (PDF)</a>
+    {% else %}
+        <p>Transaction not found.</p>
+    {% endif %}
+
+    <a href="{{ url_for('main.home') }}">Back to Home</a>
+</body>
+</html>

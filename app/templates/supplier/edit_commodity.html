@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Commodity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            padding: 40px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit Commodity: {{ commodity.name }}</h2>
+
+    <form method="post">
+        <label for="name">Name:</label>
+        <input type="text" name="name" value="{{ commodity.name }}" required>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" value="{{ commodity.quantity }}" step="0.01" required>
+
+        <label for="unit">Unit:</label>
+        <input type="text" name="unit" value="{{ commodity.unit }}" required>
+
+        <label for="price">Price (KES):</label>
+        <input type="number" name="price" value="{{ commodity.price }}" step="1.0" required>
+
+        <button type="submit">Update Commodity</button>
+    </form>
+
+    <a href="{{ url_for('supplier.supplier_commodities', supplier_id=commodity.supplier_id) }}">Back to Commodities</a>
+</body>
+</html>

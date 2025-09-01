@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="login-box">
+                <div class="card">
+                    <div class="card-body login-card-body">
+                        <p class="login-box-msg">Verify OTP Sent to Your Email</p>
+                        
+                        <!-- Display flash messages -->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        
+                        <form action="{{ url_for('auth.verify_otp', email=email) }}" method="post" id="otp-form">
+                            {{ form.hidden_tag() }}  <!-- Corrected to use hidden_tag() -->
+                            <div class="input-group mb-3">
+                                {{ form.otp(class="form-control", placeholder="Enter OTP", required=True) }}  <!-- Use the form field for OTP -->
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-key"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Optional inline validation feedback -->
+                            <small class="text-danger" id="otp-error" style="display: none;">OTP is required.</small>
+
+                            <div class="row justify-content-center mt-3">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary btn-block">Verify OTP</button>
+                                </div>
+                            </div>
+                        </form>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript for inline validation -->
+    <script>
+        const otpInput = document.querySelector('input[name="otp"]');
+        const error = document.getElementById('otp-error');
+
+        otpInput.addEventListener('input', () => {
+            if (otpInput.value.trim() === "") {
+                error.style.display = 'block';
+            } else {
+                error.style.display = 'none';
+            }
+        });
+    </script>
+{% endblock %}

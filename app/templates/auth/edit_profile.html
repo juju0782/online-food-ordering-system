@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile | TJ DineHive</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f4f8, #d9e4f5);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: white;
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .flash {
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .flash.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .flash.danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        form label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        form input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Profile</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" value="{{ user.name }}" required>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="{{ user.email }}" required>
+
+            <label for="password">Current Password (optional)</label>
+            <input type="password" name="password" id="password">
+            
+            <label for="password">New Password (optional)</label>
+            <input type="password" name="password" id="password">
+
+            <button type="submit" class="btn">Update Profile</button>
+        </form>
+
+        <a href="{{ url_for('auth.profile') }}" class="back-link">← Back to Profile</a>
+    </div>
+</body>
+</html>

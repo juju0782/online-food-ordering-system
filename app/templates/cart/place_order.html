@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block title %}Place Order - {{ company_name }}{% endblock %}
+
+{% block main %}
+<div class="container mt-5">
+    <h2>Order Summary</h2>
+    
+    {% if cart_items %}
+        <!-- Display order details -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <!-- <h3>Your Cart Items</h3> -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price (KSh)</th>
+                            <th scope="col">Total (KSh)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.price }}</td>
+                            <td style="text-align: center;">{{ "{:,.0f}".format(item.price * item.quantity) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            
+                <!-- Total Price Section -->
+                <div class="d-flex justify-content-end mt-3">
+                    <h4 style="color: green;"><strong>Total Price:</strong> KSh {{ "{:,.2f}".format(total_price) }}</h4>
+                </div>
+            </div>
+            
+        </div>
+
+
+        <!-- Shipping and billing address forms -->
+        <div class="row">
+            <div class="col-12 mb-4">
+                <h5>Enter your location and contact details:</h5>
+                <form action="{{ url_for('cart.finalize_order') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="shipping_address" class="form-label">Shipping Address / Home Area</label>
+                        <input type="text" class="form-control" id="shipping_address" name="shipping_address" placeholder="ie..UOE, Eldoret" required>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="contact_number" class="form-label">Contact Number</label>
+                        <input type="number" class="form-control" id="contact_number" name="contact_number" placeholder="07XX XXX XXX" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Place Order</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Return to cart or complete checkout -->
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                <a href="{{ url_for('cart.shopping_cart') }}" class="btn btn-primary btn-sm me-2">Back to Cart</a>
+                <!-- <a href="{{ url_for('cart.place_order') }}" class="btn btn-success btn-sm">Place Order</a> -->
+            </div>
+        </div>
+    {% else %}
+        <p>Your cart is empty. Please add some items first.</p>
+        <a href="{{ url_for('main.home') }}" class="btn btn-primary">Go to Shop</a>
+    {% endif %}
+</div>
+{% endblock %}

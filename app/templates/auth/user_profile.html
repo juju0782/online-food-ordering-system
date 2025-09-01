@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile | TJ DineHive</title>
+    <style>
+        /* General Reset */
+        body, h1, p, a {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #f0f4f8, #d9e4f5);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .profile-info p {
+            font-size: 18px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .profile-info strong {
+            color: #2980b9;
+        }
+
+        .profile-actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            margin: 10px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            box-shadow: 0 6px 16px rgba(41, 128, 185, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #555;
+            background-color: #ecf0f1;
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Profile</h1>
+
+        <div class="profile-info">
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.phone }}</p>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{{ url_for('auth.edit_profile') }}" class="btn">Edit Profile</a>
+            <a href="{{ url_for('auth.logout') }}" class="btn">Logout</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; {{ current_year or 2025 }} TJ DINEHIVE. All rights reserved.</p>
+    </footer>
+</body>
+</html>

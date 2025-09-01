@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Forecast</title>
+    <style>
+        body { font-family: Arial; background: #eef2f5; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 8px; max-width: 700px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; }
+        .restock { background-color: #f9d6d5; }
+        .ok { background-color: #d5f9e1; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Predicted Stock Needs (Next 7 Days)</h2>
+    <a href="{{ url_for('inventory.inventory_dashboard') }}">← Back to Inventory</a>
+    <table>
+        <tr><th>Item</th><th>Current Stock</th><th>Predicted Demand</th><th>Status</th></tr>
+        {% for p in predictions %}
+        <tr class="{% if p.status == 'Restock Needed' %}restock{% else %}ok{% endif %}">
+            <td>{{ p.product_name }}</td>
+            <td>{{ p.current_stock }}</td>
+            <td>{{ p.predicted_weekly_demand }}</td>
+            <td>{{ p.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

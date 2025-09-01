@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Supplier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a.back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a.back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Edit Supplier</h1>
+        <form method="POST">
+            <label>Name:</label>
+            <input type="text" name="name" value="{{ supplier.name }}">
+
+            <label>Contact Person:</label>
+            <input type="text" name="contact_person" value="{{ supplier.contact_person }}">
+
+            <label>Email:</label>
+            <input type="text" name="email" value="{{ supplier.email }}">
+
+            <label>phone:</label>
+            <input type="text" name="phone" value="{{ supplier.phone }}">
+
+            <label>Commodities:</label>
+            <input type="text" name="commodities" value="{{ supplier.commodities }}">
+
+            <button type="submit">Save Changes</button>
+        </form>
+        <a href="{{ url_for('supplier.list_supplier') }}" class="back">← Back to List</a>
+    </div>
+</body>
+</html>

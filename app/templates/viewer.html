@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food 360° Viewer & Cooking Video</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <h1>Food 360° Viewer & Cooking Video</h1>
+
+    {% if filename.endswith('.mp4') %}
+        <!-- Display Video -->
+        <h2>Cooking Video</h2>
+        <video controls width="600">
+            <source src="{{ url_for('static', filename='upload/' + filename) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% else %}
+        <!-- Display 360° Image -->
+        <h2>Explore the Dish in 360°</h2>
+        <div id="viewer-container">
+            <img id="pano" src="{{ url_for('static', filename='upload/' + filename) }}" alt="360° Food Image">
+        </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/360viewer.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Commodity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fa;
+            margin: 40px;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-width: 400px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Add Raw Ingredient for {{ supplier.name }}</h2>
+
+    <form method="post">
+        <label for="name">Commodity Name:</label>
+        <input type="text" name="name" required>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" step="0.01" required>
+
+        <label for="unit">Unit (e.g., kg, liters):</label>
+        <input type="text" name="unit" required>
+
+        <label for="price">Price (KES):</label>
+        <input type="number" name="price" step="1.0" required>
+
+        <button type="submit">Add Commodity</button>
+    </form>
+
+    <a href="{{ url_for('supplier.supplier_commodities', supplier_id=supplier.supplier_id) }}">
+        Back to Commodities
+    </a>
+</body>
+</html>

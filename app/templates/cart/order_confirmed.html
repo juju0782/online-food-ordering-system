@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Order Confirmed - {{ company_name }}{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Order Confirmation</h2>
+    <p>Thank you for your order. Below are the details of your purchase:</p>
+
+    <h3>Order Details</h3>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Order ID:</strong> {{ order.id }}</li>
+        <li class="list-group-item"><strong>Total Amount:</strong> KSh {{ order.total_amount }}</li>
+        <li class="list-group-item"><strong>Shipping Address:</strong> {{ order.shipping_address }}</li>
+        <li class="list-group-item"><strong>Billing Address:</strong> {{ order.billing_address }}</li>
+    </ul>
+
+    <h3>Ordered Items:</h3>
+    <ul class="list-group">
+        {% for item in order.items %}
+        <li class="list-group-item">
+            {{ item.product_name | title  }} (x{{ item.quantity }}) - KSh {{ item.price }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('main.home') }}" class="btn btn-primary mt-3">Go to Shop</a>
+</div>
+{% endblock %}

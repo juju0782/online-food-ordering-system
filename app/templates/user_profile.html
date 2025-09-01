@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>User Profile</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    
+    <label>Email:</label>
+    {{ form.email(class="form-control") }}
+
+    <label>Phone:</label>
+    {{ form.phone(class="form-control") }}
+
+    <label>First Name:</label>
+    {{ form.first_name(class="form-control") }}
+
+    <label>Last Name:</label>
+    {{ form.last_name(class="form-control") }}
+
+    <label>Address:</label>
+    {{ form.address(class="form-control") }}
+
+    <label>City:</label>
+    {{ form.city(class="form-control") }}
+
+    <label>State:</label>
+    {{ form.state(class="form-control") }}
+
+    <label>Zip Code:</label>
+    {{ form.zip_code(class="form-control") }}
+
+    <label>Country:</label>
+    {{ form.country(class="form-control") }}
+
+    <label>New Password:</label>
+    {{ form.password(class="form-control") }}
+
+    <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+</form>
+{% endblock %}
